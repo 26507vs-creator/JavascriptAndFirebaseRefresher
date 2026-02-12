@@ -1,12 +1,3 @@
-import { fb_authenticate } from "./fb_io.mjs";
-
-document.addEventListener("DOMContentLoaded", () => {
-    const loginBtn = document.getElementById("loginBtn");
-
-    loginBtn.addEventListener("click", fb_authenticate);
-});
-
-
 /**************************************************************/
 // main.mjs
 // Main entry for index.html
