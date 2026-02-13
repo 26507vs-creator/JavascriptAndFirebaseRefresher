@@ -1,3 +1,5 @@
+import { fb_authenticate } from "./fb_io.mjs";
+
 /**************************************************************/
 // main.mjs
 // Main entry for index.html
