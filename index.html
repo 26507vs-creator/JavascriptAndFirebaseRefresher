@@ -12,6 +12,7 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
     <!-- firebase end ******************************************-->
 </head>
+    <script type="module" src="./main.mjs"></script>
 
 <!--*************************************************************
   BODY
@@ -22,6 +23,7 @@
     </header>
 
     <section>
+
         <div class="container">
             <div class="column">
                 <button onclick="fb_initialise()">t03: initialise firebase</button>
@@ -31,7 +33,7 @@
             </div>
 
             <div class="column">
-                <button onclick="">t07: write record</button>
+                <button id="btn_writeRec" onclick="btn_writeRec()">t07: write record</button>
                 <button onclick="">t08: read record</button>
                 <button onclick="">t09: read all</button>
                 <button onclick="">t10: update record</button>
@@ -75,7 +77,6 @@
     </footer>
 
     <!-- Your JS files & main module ***************************-->
-    <script type="module" src="./main.mjs"></script>
 </body>
 </html>
 <!--*************************************************************

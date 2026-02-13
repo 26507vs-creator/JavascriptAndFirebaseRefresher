@@ -10,6 +10,10 @@ import { getAuth, GoogleAuthProvider, signInWithPopup }
 
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
+import { ref, set }
+
+    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
     var fb_gamedb
 //**************************************************************/
 // fb_io.mjs
@@ -60,6 +64,27 @@ function fb_initialise() {
     console.info(fb_gamedb); 
 }
 
+function btn_writeRec(){
+    console.log("write record button clicked");
+    console.log(fb_gamedb)
+        const dbReference= ref(fb_gamedb, "/users/name");
+
+    set(dbReference, "Ben").then(() => {
+
+        console.log("Record written successfully");
+
+    }).catch((error) => {
+
+        console.error("Error writing record: ", error);
+
+    });
+}
+ window.btn_writeRec   = btn_writeRec;
+
+
+/**********************************************************
+// Athentication code - not working yet, so commented out for now
+
  // Create and export fb_authenticate()
 const AUTH = getAuth();
 const PROVIDER = new GoogleAuthProvider();
@@ -77,6 +102,8 @@ export function fb_authenticate() {
             console.error("Authentication error:", error);
         });
 }
+*/
+
 
 /**************************************************************/
 // END OF CODE
