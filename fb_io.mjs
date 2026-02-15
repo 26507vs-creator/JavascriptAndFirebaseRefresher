@@ -14,7 +14,12 @@ import { ref, set }
 
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
+import { onAuthStateChanged }
+
+    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
     var fb_gamedb
+
 //**************************************************************/
 // fb_io.mjs
 // Generalised firebase routines
@@ -27,12 +32,6 @@ const COL_C = 'white';	    // These two const are part of the coloured
 const COL_B = '#CD7F32';	//  console.log for functions scheme
 console.log('%c fb_io.mjs',
             'color: blue; background-color: white;');
-
-/**************************************************************/
-// Import all external constants & functions required
-/**************************************************************/
-// Import all the methods you want to call from the firebase modules
-
 
 /**************************************************************/
 // EXPORT FUNCTIONS
@@ -81,28 +80,48 @@ function btn_writeRec(){
 }
  window.btn_writeRec   = btn_writeRec;
 
-
-/**********************************************************
-// Athentication code - not working yet, so commented out for now
-
- // Create and export fb_authenticate()
-const AUTH = getAuth();
-const PROVIDER = new GoogleAuthProvider();
-
-PROVIDER.setCustomParameters({
-    prompt: 'select_account'
-});
-
+// Create and export fb_authenticate()
 export function fb_authenticate() {
-    signInWithPopup(AUTH, PROVIDER)
-        .then((result) => {
-            console.log("User signed in:", result.user);
+
+    const AUTH = getAuth();
+    const PROVIDER = new GoogleAuthProvider();
+
+    // Force Google to show account selection
+    PROVIDER.setCustomParameters({
+        prompt: 'select_account'
+    });
+
+    signInWithPopup(AUTH, PROVIDER).then((result) => {
+            // Successful authentication
+            console.log(result.user.email);
+            console.log(result.user.uid);
+
         })
         .catch((error) => {
-            console.error("Authentication error:", error);
+            //  Authentication error
+            console.log(error);
+
         });
 }
-*/
+
+export function fb_detectLoginChange() {
+      const AUTH = getAuth();
+
+    onAuthStateChanged(AUTH, (user) => {
+
+        if (user) {
+            // Code for user logged in goes here
+            console.log("Sucessful login")
+
+        } else {
+            // Code for user logged out goes here
+            console.log("Sucessful logout")
+        }
+    }, (error) => {
+        // Code for an onAuthStateChanged error goes here
+        console.log("Error")
+
+    });}
 
 
 /**************************************************************/
