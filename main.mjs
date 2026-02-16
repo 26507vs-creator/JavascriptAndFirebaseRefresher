@@ -1,7 +1,9 @@
-import { fb_authenticate, fb_detectLoginChange } from "./fb_io.mjs";
+import { fb_authenticate, fb_detectLoginChange, fb_logout, fbReadRec } from "./fb_io.mjs";
 
 window.fb_authenticate = fb_authenticate;
 window.fb_detectLoginChange = fb_detectLoginChange;
+window.fb_logout = fb_logout;
+window.fbReadRec = fbReadRec;
 
 /**************************************************************/
 // main.mjs

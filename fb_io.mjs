@@ -2,19 +2,11 @@ import { initializeApp }
 
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 
-import { getDatabase }
+import { getDatabase, ref, set, get }
 
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-import { getAuth, GoogleAuthProvider, signInWithPopup }
-
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
-import { ref, set }
-
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
-import { onAuthStateChanged }
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut }
 
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
@@ -63,14 +55,43 @@ function fb_initialise() {
     console.info(fb_gamedb); 
 }
 
+
+export function fbReadRec(){
+    const dbReference= ref(fb_gamedb, "/Users/Name");
+
+    get(dbReference).then((snapshot) => {
+
+        var fb_data = snapshot.val();
+
+        if (fb_data != null) {
+            // Code for a successful read goes here
+            console.log("Sucessful read")
+            document.getElementById("p_fbReadRec").innerHTML= "Sucessful read";
+
+        } else {
+            // Code for no record found goes here
+            console.log("No record found")
+            document.getElementById("p_fbReadRec").innerHTML= "No record found";
+        }
+
+    }).catch((error) => {
+        // Code for a read error goes here
+        console.log(error)
+
+    });
+}
+
+
 function btn_writeRec(){
     console.log("write record button clicked");
     console.log(fb_gamedb)
-        const dbReference= ref(fb_gamedb, "/users/name");
+        const dbReference= ref(fb_gamedb, "/Users/Name");
 
     set(dbReference, "Ben").then(() => {
 
         console.log("Record written successfully");
+        document.getElementById("p_fbWriteRec").innerHTML= "Sucess!";
+
 
     }).catch((error) => {
 
@@ -95,34 +116,51 @@ export function fb_authenticate() {
             // Successful authentication
             console.log(result.user.email);
             console.log(result.user.uid);
+            document.getElementById("p_fbAuthenticate").innerHTML= "Sucess!";
 
         })
         .catch((error) => {
             //  Authentication error
             console.log(error);
+            document.getElementById("p_fbAuthenticate").innerHTML= "Error";
 
         });
 }
 
 export function fb_detectLoginChange() {
-      const AUTH = getAuth();
+    const AUTH = getAuth();
 
     onAuthStateChanged(AUTH, (user) => {
 
         if (user) {
             // Code for user logged in goes here
-            console.log("Sucessful login")
+            console.log("User logged in")
+            document.getElementById("p_fbLogin").innerHTML= "User logged in";
 
         } else {
             // Code for user logged out goes here
-            console.log("Sucessful logout")
+            console.log("User logged out")
+            document.getElementById("p_fbLogin").innerHTML= "User logged out";
+
         }
     }, (error) => {
         // Code for an onAuthStateChanged error goes here
-        console.log("Error")
+        console.log(error)
 
     });}
 
+
+export function fb_logout() {
+    const AUTH = getAuth();
+
+    signOut(AUTH).then(() => {
+        // Code for a successful logout goes here
+        console.log("Sucessful logout")
+    })
+    .catch((error) => {
+        // Code for a logout error goes here
+        console.log(error)
+    });}
 
 /**************************************************************/
 // END OF CODE
